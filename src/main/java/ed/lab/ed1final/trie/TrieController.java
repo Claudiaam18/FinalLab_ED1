@@ -24,4 +24,20 @@ public class TrieController {
         trie.insert(word);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @GetMapping("/{word}/count")
+    public ResponseEntity<Map<String, Object>> countWord(@PathVariable String word) {
+        return ResponseEntity.ok(Map.of(
+                "word", word,
+                "wordsEqualTo", trie.countWordsEqualTo(word)
+        ));
+    }
+
+    @GetMapping("/{prefix}/prefix")
+    public ResponseEntity<Map<String, Object>> countPrefix(@PathVariable String prefix) {
+        return ResponseEntity.ok(Map.of(
+                "word", prefix,
+                "wordsStartingWith", trie.countWordsStartingWith(prefix)
+        ));
+    }
 }
