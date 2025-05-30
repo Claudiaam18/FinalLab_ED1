@@ -18,7 +18,8 @@ public class TrieController {
 
     @PostMapping("/{word}")
     public ResponseEntity<Void> insertWord(@PathVariable String word) {
-        if (!word.matches("[a-z]+") || word.isEmpty()) {
+        // Validar que la palabra sea en minúsculas y solo contenga letras
+        if (word == null || word.isEmpty() || !word.matches("[a-z]+")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         trie.insert(word);
@@ -40,6 +41,7 @@ public class TrieController {
                 "wordsStartingWith", trie.countWordsStartingWith(prefix)
         ));
     }
+
     @DeleteMapping("/{word}")
     public ResponseEntity<Void> deleteWord(@PathVariable String word) {
         trie.erase(word);
