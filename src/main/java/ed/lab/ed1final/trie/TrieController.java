@@ -19,7 +19,6 @@ public class TrieController {
 
     @PostMapping("/{word}")
     public ResponseEntity<Void> insertWord(@PathVariable String word) {
-        // Validar que la palabra sea en minúsculas y solo contenga letras
         if (word == null || word.isEmpty() || !word.matches("[a-z]+")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
