@@ -40,4 +40,9 @@ public class TrieController {
                 "wordsStartingWith", trie.countWordsStartingWith(prefix)
         ));
     }
+    @DeleteMapping("/{word}")
+    public ResponseEntity<Void> deleteWord(@PathVariable String word) {
+        trie.erase(word);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
