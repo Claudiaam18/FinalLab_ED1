@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.Map;
 
 @RestController
@@ -28,23 +29,19 @@ public class TrieController {
 
     @GetMapping("/{word}/count")
     public ResponseEntity<Map<String, Object>> countWord(@PathVariable String word) {
-        return ResponseEntity.ok(Map.of(
-                "word", word,
-                "wordsEqualTo", trie.countWordsEqualTo(word)
-        ));
+        int count = trie.countWordsEqualTo(word);
+        return ResponseEntity.ok(Collections.singletonMap("wordsEqualTo", count));
     }
 
     @GetMapping("/{prefix}/prefix")
     public ResponseEntity<Map<String, Object>> countPrefix(@PathVariable String prefix) {
-        return ResponseEntity.ok(Map.of(
-                "word", prefix,
-                "wordsStartingWith", trie.countWordsStartingWith(prefix)
-        ));
+        int count = trie.countWordsStartingWith(prefix);
+        return ResponseEntity.ok(Collections.singletonMap("wordsStartingWith", count));
     }
 
     @DeleteMapping("/{word}")
     public ResponseEntity<Void> deleteWord(@PathVariable String word) {
         trie.erase(word);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.noContent().build();
     }
 }
